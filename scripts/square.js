@@ -3,7 +3,10 @@ class Square {
         this.x = position.x;
         this.y = position.y;
         this.value = value;
+        // Предыдущая позиция
         this.oldPosition = null;
+        // Квадрат, который удалился в результате слияния
+        this.mergedFrom = null;
     }
 
     move(position) {
