@@ -1,13 +1,12 @@
-/**
- * index.js
- * - All our useful JS goes here, awesome!
- */
 
 $(document).ready(function () {
     var $playfield = $('#playfield');
     var mousedown = false;
 
-    new Game();
+    var $container = $('#squares-container');
+
+    // Запускаем игру game.js
+    new Game($container);
 
     $playfield.unbind('mousedown').mousedown(function () {
         mousedown = true;
