@@ -1,9 +1,9 @@
 class Game {
-    constructor() {
+    constructor($container) {
         this.size = 4;
         this.controls = new Controls();
         this.field = new Field(this.size);
-        this.html = new HTML();
+        this.html = new HTML($container);
         this.newSquare();
         this.newSquare();
         this.draw();
@@ -12,7 +12,8 @@ class Game {
     }
 
     draw() {
-        this.html.draw(this.field);
+        console.log(this.field.grid);
+        this.html.draw(this.field.grid);
     }
 
     newSquare() {
@@ -24,8 +25,8 @@ class Game {
 
     moveSquare(square, cell) {
         this.field.remove(square);
-        this.field.add(square);
         square.move(cell);
+        this.field.add(square);
     }
 
     move(direction) {
@@ -39,29 +40,35 @@ class Game {
             3: { x: -1, y: 0 }   // Left
         };
 
-        var square;
+        let square;
         var vector = map[direction];
+        // Создаем порядок изменения клеток поля обратный вектору движения
         var traversals = this.buildTraversals(vector);
         var moved = false;
 
-        // Traverse the grid in the right direction and move tiles
-        traversals.x.forEach(function (x) {
-            traversals.y.forEach(function (y) {
+        traversals.y.forEach(function (y) {
+            traversals.x.forEach(function (x) {
                 let cell = { x, y };
                 square = self.field.cell(cell);
 
                 if (square) {
+                    // Находим дальнюю пустую клету и клетку за ней
                     var destination = self.findDestination(square, vector);
-                    console.log(square, destination);
                     var next = self.field.cell(destination.next);
 
+                    // Если в след. клетке есть квадрат того же номинала, что и передвигаемый квадрат
                     if (next && next.value === square.value) {
                         var merged = new Square(destination.next, square.value * 2);
 
-                        self.field.add(merged);
-                        self.field.remove(square);
-
+                        // Меняем координаты квадрата для проверки isSamePosition и для анимации движения в .mergedFrom
                         square.move(destination.next);
+
+                        // Записываем оба "родителя" нового квадрата для отрисовки движения
+                        merged.mergedFrom = [square, next];
+
+                        self.field.add(merged);
+                        // убираем square с поля
+                        self.field.remove(cell);
                     } else {
                         self.moveSquare(square, destination.pos);
                     }
@@ -75,7 +82,6 @@ class Game {
 
         if (moved) {
             //this.newSquare();
-
             this.draw();
         }
     };
@@ -88,6 +94,9 @@ class Game {
             traversals.y.push(pos);
         }
 
+        // Если вектор направлен вниз или вправо, то начинаем с противоволожного края, 
+        // чтобы сначало сдвинуть квадраты, которые ближе к краю
+        // при значении -1 подходит прямой порядок массива, при значении 0 порядок массива не важен
         if (vector.x === 1) traversals.x = traversals.x.reverse();
         if (vector.y === 1) traversals.y = traversals.y.reverse();
 
@@ -102,15 +111,17 @@ class Game {
         var previous;
         var cell = { x: square.x, y: square.y };
 
+        // Шагаем от выбранного квадрата в сторону вектора, пока не находим другой квадрат, либо выходим за край
         do {
             previous = cell;
             cell = { x: previous.x + vector.x, y: previous.y + vector.y };
         } while (this.field.isOnField(cell) &&
             !this.field.cell(cell));
 
+        // Берем место назначение и следующую клетку
         return {
             pos: previous,
-            next: cell // Used to check if a merge is required
+            next: cell
         };
     }
 }
