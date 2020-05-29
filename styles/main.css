@@ -1,8 +1,5 @@
 @charset "UTF-8";
-/**
-* index.scss
-* - Add any styles you want here!
-*/
+
 * {
     -moz-user-select: none;
   -khtml-user-select: none;
@@ -19,8 +16,8 @@
 
 #playfield {
   position: absolute;
-  top: 100px;
-  left: 100px;
+  /* top: 100px;
+  left: 100px; */
   width: 400px;
   height: 400px;
   background: white;
@@ -41,7 +38,21 @@
   color: black;
   text-align: center;
   font: 48px/96px Arial;
+  -o-transition: 100ms ease-out;
+  -webkit-transition: 100ms ease-out;
+  -moz-transition: 100ms ease-out;
+  transition: 100ms ease-out;
 }
+
+/* .thing.merged {
+    z-index: 20;
+    -webkit-animation: pop 200ms ease 100ms;
+    -moz-animation: pop 200ms ease 100ms;
+    animation: pop 200ms ease 100ms;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    animation-fill-mode: backwards;
+} */
 
 .thing.t2 {
   background: #18df00;
@@ -98,5 +109,37 @@
 .thing.t128:after {
   content: '128';
 }
+
+.thing.t256 {
+    background: #0a034c;
+  }
+  
+  .thing.t256:after {
+    content: '256';
+  }
+
+  .thing.t512 {
+    background: #0a034c;
+  }
+  
+  .thing.t512:after {
+    content: '512';
+  }
+
+  .thing.t1024 {
+    background: #0a034c;
+  }
+  
+  .thing.t1024:after {
+    content: '1024';
+  }
+
+  .thing.t2048 {
+    background: #000000;
+  }
+  
+  .thing.t2048:after {
+    content: '2048';
+  }
 
 /* и так далее */
