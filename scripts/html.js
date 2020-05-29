@@ -1,18 +1,20 @@
 class HTML {
-    constructor() {
-        this.$container = $('#squares-container');
+    constructor($container) {
+        this.$container = $container;
     }
 
-    draw(field) {
+    draw(grid) {
         let self = this;
+        // Удаляем все элементы из контейнера
+        self.$container.empty();
 
+        // Обновляем отоброжение
         window.requestAnimationFrame(() => {
-            self.clearContainer(self.playfield);
-
-            field.grid.forEach((row) => {
-                row.forEach((cell) => {
-                    if (cell) {
-                        self.drawSquare(cell);
+            // Рисуем новые
+            grid.forEach((row) => {
+                row.forEach((square) => {
+                    if (square) {
+                        self.drawSquare(square);
                     }
                 });
             });
@@ -20,18 +22,32 @@ class HTML {
     }
 
     drawSquare(square) {
+        let self = this;
         let element = document.createElement("div");
-        var className = "thing t" + square.value;
-        element.setAttribute("class", className);
+        let classes = "thing t" + square.value;
+        element.setAttribute("class", classes);
 
-        var position = "left: " + (square.x * 100) + "px; top: " + (square.y * 100) + "px;";
-        element.setAttribute("style", position);
-        this.playfield.append(element);
-    }
+        // Если квадрат был сдвинут рисуем сначало в предыдущей позиции для анимации transition
+        let position = square.oldPosition || square;
+        let positionStyle = "left: " + (position.x * 100) + "px; top: " + (position.y * 100) + "px;";
+        element.setAttribute("style", positionStyle);
 
-    clearContainer(container) {
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
+        // Двигаем квадрат в текущую позицию
+        if (square.oldPosition) {
+            // Обновляем отоброжение, чтобы не ломались анимации
+            setTimeout(() => {
+                positionStyle = "left: " + (square.x * 100) + "px; top: " + (square.y * 100) + "px;";
+                element.setAttribute("style", positionStyle);
+            }, 0);
+        } else if (square.mergedFrom) {
+            classes += " merged";
+            element.setAttribute("class", classes);
+
+            // Отрисовываем квадраты, которые были поглащены объединением.
+            square.mergedFrom.forEach((parentSquare) => {
+                self.drawSquare(parentSquare);
+            });
         }
-    };
+        this.$container.append(element);
+    }
 }
