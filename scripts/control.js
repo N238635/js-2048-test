@@ -22,15 +22,15 @@ class Controls {
     emit(event, data) {
         var callbacks = this.events[event];
         if (callbacks && this.enableInput) {
+            // Блокируем ввод пока выполняются анимации
             this.enableInput = false;
-            callbacks.forEach(function (callback) {
-                callback(data);
-            });
-
-            // Блокируем ввод до выполнения всех анимаций
             setTimeout(() => {
                 this.enableInput = true;
             }, 200);
+
+            callbacks.forEach(function (callback) {
+                callback(data);
+            });
         }
     };
 
