@@ -1,11 +1,16 @@
 class Controls {
     constructor() {
         this.events = {};
+        this.$playfield = $('#playfield');
+        this.mouseCoords = null;
+        this.enableInput = true;
+
         this.listen();
         this.bindButton(".reset", this.reset);
         this.bindButton(".restart", this.reset);
     }
 
+    // Записываем действия для конкретного евента
     on(event, callback) {
         if (!this.events[event]) {
             this.events[event] = [];
@@ -13,12 +18,19 @@ class Controls {
         this.events[event].push(callback);
     };
 
+    // Выполняем действия евента
     emit(event, data) {
         var callbacks = this.events[event];
-        if (callbacks) {
+        if (callbacks && this.enableInput) {
+            this.enableInput = false;
             callbacks.forEach(function (callback) {
                 callback(data);
             });
+
+            // Блокируем ввод до выполнения всех анимаций
+            setTimeout(() => {
+                this.enableInput = true;
+            }, 200);
         }
     };
 
@@ -40,12 +52,32 @@ class Controls {
             65: 3  // A
         };
 
+        // Управление с клавиатуры взято из оригинальной версии
         document.addEventListener("keydown", function (event) {
             var mapped = map[event.which];
 
             if (mapped !== undefined) {
                 event.preventDefault();
                 self.emit("move", mapped);
+            }
+        });
+
+        // Нажатия мыши фиксируются только внутри поля
+        this.$playfield.unbind('mousedown').mousedown((event) => {
+            self.mouseCoords = { x: event.pageX, y: event.pageY }
+        });
+
+        // Отжатие мыши фиксируется за пределами поля для удобства
+        document.addEventListener("mouseup", (event) => {
+            if (this.mouseCoords) {
+                let x = event.pageX - self.mouseCoords.x;
+                let y = event.pageY - self.mouseCoords.y;
+                let mapped = self.mapMouseDirection(x, y);
+                // Защита от случайных кликов
+                if (mapped !== null) {
+                    self.emit("move", mapped);
+                }
+                self.mouseCoords = null;
             }
         });
     }
@@ -58,5 +90,19 @@ class Controls {
     reset(event) {
         event.preventDefault();
         this.emit("restart");
+    }
+
+    mapMouseDirection(x, y) {
+        let absX = Math.abs(x);
+        let absY = Math.abs(y);
+        if (Math.abs(absX - absY) < 10) {
+            // Близко к диагонали не считать
+            return null;
+        } else if (absX > absY) {
+            // Если движение меньше 10 пикселей не считать
+            return (absX < 10) ? null : ((x > 0) ? 1 : 3);
+        } else {
+            return (absY < 10) ? null : ((y > 0) ? 2 : 0);
+        }
     }
 }
