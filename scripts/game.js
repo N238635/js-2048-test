@@ -1,19 +1,33 @@
 class Game {
-    constructor($container) {
+    constructor() {
         this.size = 4;
         this.controls = new Controls();
         this.field = new Field(this.size);
-        this.html = new HTML($container);
+        this.html = new HTML();
+
+        this.init();
+
+        this.controls.on("move", this.move.bind(this));
+        this.controls.on("restart", this.restart.bind(this));
+    }
+
+    init() {
+        this.score = 0;
+        this.gameOver = false;
+
         this.newSquare();
         this.newSquare();
         this.draw();
-
-        this.controls.on("move", this.move.bind(this));
     }
 
     draw() {
-        console.log(this.field.grid);
-        this.html.draw(this.field.grid);
+        this.html.draw(
+            this.field.grid,
+            {
+                gameOver: this.gameOver,
+                score: this.score,
+            }
+        );
     }
 
     newSquare() {
@@ -32,6 +46,8 @@ class Game {
     move(direction) {
         // 0: up, 1: right, 2: down, 3: left
         var self = this;
+
+        if (this.gameOver) { return }
 
         var map = {
             0: { x: 0, y: -1 }, // Up
@@ -62,6 +78,8 @@ class Game {
                     if (next && next.value === square.value && !next.mergedFrom) {
                         var merged = new Square(destination.next, square.value * 2);
 
+                        this.score += square.value * 2;
+
                         // Меняем координаты квадрата для проверки isSamePosition и для анимации движения в .mergedFrom
                         square.move(destination.next);
 
@@ -84,6 +102,7 @@ class Game {
 
         if (moved) {
             this.newSquare();
+            this.gameOver = this.isGameOver(this.field);
             this.draw();
         }
     };
@@ -125,5 +144,38 @@ class Game {
             pos: previous,
             next: cell
         };
+    }
+
+    isGameOver(field) {
+        let vectors = [
+            { x: 1, y: 0 },
+            { x: 0, y: 1 },
+        ];
+        // Сравниаем значение каждого квадрата на поле со значением соседних квадратов по вертикали и горизонтали
+        // если квадрат пустой, либо рядом есть квадрат того же ранга игра еще не закончена
+        for (let y = 0; y < this.size; y++) {
+            for (let x = 0; x < this.size; x++) {
+                let cell = { x, y };
+                let square = field.cell(cell);
+                if (!square) {
+                    return false;
+                } else {
+                    for (let i = 0; i < vectors.length; i++) {
+                        let target = field.cell({ x: cell.x + vectors[i].x, y: cell.y + vectors[i].y });
+                        if (target && target.value === square.value) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        console.log('GAME OVER!');
+        return true;
+    }
+
+    restart() {
+        this.field.init();
+        this.html.clearMessage();
+        this.init();
     }
 }
