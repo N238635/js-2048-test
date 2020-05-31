@@ -14,14 +14,13 @@
     -ms-user-drag: none;
 }
 
-#game {
+.game {
     position: absolute;
     top: 100px;
-    left: 100px;
     width: 400px;
 }
 
-#score-board {
+.score-board {
     position: relative;
     margin-bottom: 5px;
 
@@ -34,11 +33,11 @@
     padding: 15px;
 }
 
-#score-board .score {
+.score-board .score {
     padding: 5px;
 }
 
-#score-board .restart {
+.score-board .restart {
     cursor: pointer;
     margin-left: auto;
     background: gray;
@@ -46,7 +45,8 @@
     border-radius: 15px;
 }
 
-#playfield {
+.playfield {
+    cursor: pointer;
     position: relative;
     height: 400px;
     background: white;
@@ -58,7 +58,6 @@
     height: 100px;
     background: gray;
 }
-
 
 
 @keyframes fade-in {
