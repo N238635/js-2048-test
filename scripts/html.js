@@ -3,6 +3,7 @@ class HTML {
         this.$playfield = $('#playfield');
         this.$container = $('#squares-container');
         this.$message = $('#end-screen');
+        this.$score = $('.score');
     }
 
     draw(grid, data) {
@@ -23,6 +24,8 @@ class HTML {
             });
         });
 
+        this.updateScore(data.score);
+
         if (data.gameOver) {
             this.gameOver(data.score);
         }
@@ -36,6 +39,9 @@ class HTML {
         let element = document.createElement("div");
         let classes = "thing t" + square.value;
         element.setAttribute("class", classes);
+
+        // Записываем номинал квадрата, потому что прописывать их в классе плохо масштабируется
+        element.textContent = square.value;
 
         // Если квадрат был сдвинут рисуем сначало в предыдущей позиции для анимации transition
         let position = square.oldPosition || square;
@@ -74,5 +80,10 @@ class HTML {
 
     clearMessage() {
         this.$message.removeClass("gameover");
+    }
+
+    updateScore(score) {
+        let text = "Score: " + score;
+        this.$score.text(text);
     }
 }
