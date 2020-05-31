@@ -1,10 +1,13 @@
 class HTML {
     constructor($container) {
-        this.$container = $container;
+        this.$playfield = $('#playfield');
+        this.$container = $('#squares-container');
+        this.$message = $('#end-screen');
     }
 
-    draw(grid) {
+    draw(grid, data) {
         let self = this;
+
         // Удаляем все элементы из контейнера
         self.$container.empty();
 
@@ -19,6 +22,10 @@ class HTML {
                 });
             });
         });
+
+        if (data.gameOver) {
+            this.gameOver(data.score);
+        }
     }
 
     drawSquare(square) {
@@ -57,5 +64,15 @@ class HTML {
 
         wrapper.appendChild(element);
         this.$container.append(wrapper);
+    }
+
+    gameOver(score) {
+        let message = "Your score: " + score;
+        this.$message.find("p")[0].textContent = message;
+        this.$message.addClass("gameover");
+    }
+
+    clearMessage() {
+        this.$message.removeClass("gameover");
     }
 }
