@@ -2,7 +2,10 @@ class Field {
     constructor(size) {
         this.size = size;
         this.grid = [];
+        this.init();
+    }
 
+    init() {
         for (let y = 0; y < this.size; y++) {
             this.grid[y] = [];
             for (let x = 0; x < this.size; x++) {
