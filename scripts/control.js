@@ -2,6 +2,7 @@ class Controls {
     constructor() {
         this.events = {};
         this.listen();
+        this.bindButton();
     }
 
     on(event, callback) {
@@ -46,5 +47,16 @@ class Controls {
                 self.emit("move", mapped);
             }
         });
+    }
+
+    bindButton() {
+        var button = document.querySelector("#reset");
+        button.addEventListener("click", this.reset.bind(this));
+        button.addEventListener("touchend", this.reset.bind(this));
+    }
+
+    reset(event) {
+        event.preventDefault();
+        this.emit("restart");
     }
 }
