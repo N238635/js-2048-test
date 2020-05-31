@@ -78,7 +78,7 @@ class Game {
                     if (next && next.value === square.value && !next.mergedFrom) {
                         var merged = new Square(destination.next, square.value * 2);
 
-                        this.score += square.value * 2;
+                        self.score += square.value * 2;
 
                         // Меняем координаты квадрата для проверки isSamePosition и для анимации движения в .mergedFrom
                         square.move(destination.next);
