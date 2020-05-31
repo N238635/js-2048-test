@@ -23,6 +23,9 @@ class HTML {
 
     drawSquare(square) {
         let self = this;
+        let wrapper = document.createElement("div");
+        wrapper.setAttribute("class", "wrapper");
+
         let element = document.createElement("div");
         let classes = "thing t" + square.value;
         element.setAttribute("class", classes);
@@ -30,14 +33,14 @@ class HTML {
         // Если квадрат был сдвинут рисуем сначало в предыдущей позиции для анимации transition
         let position = square.oldPosition || square;
         let positionStyle = "left: " + (position.x * 100) + "px; top: " + (position.y * 100) + "px;";
-        element.setAttribute("style", positionStyle);
+        wrapper.setAttribute("style", positionStyle);
 
         // Двигаем квадрат в текущую позицию
         if (square.oldPosition) {
             // Обновляем отоброжение, чтобы не ломались анимации
             setTimeout(() => {
                 positionStyle = "left: " + (square.x * 100) + "px; top: " + (square.y * 100) + "px;";
-                element.setAttribute("style", positionStyle);
+                wrapper.setAttribute("style", positionStyle);
             }, 0);
         } else if (square.mergedFrom) {
             classes += " merged";
@@ -47,7 +50,12 @@ class HTML {
             square.mergedFrom.forEach((parentSquare) => {
                 self.drawSquare(parentSquare);
             });
+        } else {
+            classes += " new";
+            element.setAttribute("class", classes);
         }
-        this.$container.append(element);
+
+        wrapper.appendChild(element);
+        this.$container.append(wrapper);
     }
 }
