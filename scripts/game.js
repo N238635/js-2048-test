@@ -169,7 +169,6 @@ class Game {
                 }
             }
         }
-        console.log('GAME OVER!');
         return true;
     }
 
