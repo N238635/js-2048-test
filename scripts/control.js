@@ -2,7 +2,8 @@ class Controls {
     constructor() {
         this.events = {};
         this.listen();
-        this.bindButton();
+        this.bindButton(".reset", this.reset);
+        this.bindButton(".restart", this.reset);
     }
 
     on(event, callback) {
@@ -49,10 +50,9 @@ class Controls {
         });
     }
 
-    bindButton() {
-        var button = document.querySelector("#reset");
-        button.addEventListener("click", this.reset.bind(this));
-        button.addEventListener("touchend", this.reset.bind(this));
+    bindButton(selector, funct) {
+        var button = document.querySelector(selector);
+        button.addEventListener("click", funct.bind(this));
     }
 
     reset(event) {
