@@ -15,7 +15,8 @@
 }
 
 .game {
-    position: absolute;
+    position: relative;
+    margin: 0 auto;
     top: 100px;
     width: 400px;
 }
