@@ -14,11 +14,40 @@
     -ms-user-drag: none;
 }
 
-#playfield {
+#game {
     position: absolute;
-    /* top: 100px;
-    left: 100px; */
+    top: 100px;
+    left: 100px;
     width: 400px;
+}
+
+#score-board {
+    position: relative;
+    margin-bottom: 5px;
+
+    background: #aaaaaa;
+
+    font-size: 30px;
+    font-weight: bold;
+
+    display: flex;
+    padding: 15px;
+}
+
+#score-board .score {
+    padding: 5px;
+}
+
+#score-board .restart {
+    cursor: pointer;
+    margin-left: auto;
+    background: gray;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+#playfield {
+    position: relative;
     height: 400px;
     background: white;
 }
@@ -29,6 +58,8 @@
     height: 100px;
     background: gray;
 }
+
+
 
 @keyframes fade-in {
     0% {
@@ -49,7 +80,7 @@
     background: rgba(238, 228, 218, 0.50);
     z-index: 100;
     text-align: center;
-    animation: fade-in 800ms ease 1200ms;
+    animation: fade-in 800ms ease 800ms;
     animation-fill-mode: both;
 }
 
@@ -65,16 +96,15 @@
 .gameover p {
     font-size: 40px;
     font-weight: bold;
-    display: inline;
     margin: 0px;
 }
 
-#reset {
+.gameover .reset {
+    cursor: pointer;
     margin-left: 10px;
     width: 40px;
     height: 40px;
     content: url(/img/reset.png);
-    display: inline;
 }
 
 @keyframes appear {
@@ -125,7 +155,7 @@
     width: 100px;
     height: 100px;
     background: transparent;
-    color: black;
+    color: white;
     text-align: center;
     font: 48px/96px Arial;
     -o-transition: 100ms ease-out;
@@ -140,95 +170,49 @@
 }
 
 .thing.t2 {
+    color: black;
     background: #18df00;
 }
 
-.thing.t2:after {
-    content: '2';
-}
-
 .thing.t4 {
+    color: black;
     background: #5a9900;
 }   
 
-.thing.t4:after {
-    content: '4';
-}
-
 .thing.t8 {
+    color: black;
     background: #8c8e00;
 }
 
-.thing.t8:after {
-    content: '8';
-}
-
 .thing.t16 {
+    color: black;
     background: #d38200;
 }
 
-.thing.t16:after {
-    content: '16';
-}
-
 .thing.t32 {
+    color: black;
     background: #ae3900;
 }
 
-.thing.t32:after {
-    content: '32';
-}
-
 .thing.t64 {
+    color: black;
     background: #931269;
 }
 
-.thing.t64:after {
-    content: '64';
-}
-
 .thing.t128 {
-    color: white;
     background: #0a034c;
-}
-
-.thing.t128:after {
-    content: '128';
 }
 
 .thing.t256 {
-    color: white;
     background: #0a034c;
-}
-
-.thing.t256:after {
-    content: '256';
 }
 
 .thing.t512 {
-    color: white;
     background: #0a034c;
-}
-
-.thing.t512:after {
-    content: '512';
 }
 
 .thing.t1024 {
-    color: white;
     background: #0a034c;
 }
 
-.thing.t1024:after {
-    content: '1024';
-}
-
-.thing.t2048 {
-    color: white;
-}
-
-.thing.t2048:after {
-    content: '2048';
-}
-
-/* и так далее */
+/* далее все чёрные с белым текстом */
