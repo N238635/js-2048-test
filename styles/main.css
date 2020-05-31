@@ -2,144 +2,181 @@
 
 * {
     -moz-user-select: none;
-  -khtml-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  -khtml-user-drag: none;
-  -ms-user-drag: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -khtml-user-drag: none;
+    -ms-user-drag: none;
 }
 
 #playfield {
-  position: absolute;
-  /* top: 100px;
-  left: 100px; */
-  width: 400px;
-  height: 400px;
-  background: white;
+    position: absolute;
+    /* top: 100px;
+    left: 100px; */
+    width: 400px;
+    height: 400px;
+    background: white;
 }
 
 .back {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: gray;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: gray;
+}
+
+@keyframes appear {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale(0);
+      -moz-transform: scale(0);
+      -ms-transform: scale(0);
+      transform: scale(0); 
+    }
+  
+    100% {
+      opacity: 1;
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1); 
+    } 
+}
+
+.new {
+    animation: appear 200ms ease 100ms;
+    animation-fill-mode: backwards; 
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0); 
+    }
+
+    50% {
+        transform: scale(1.2); 
+    }
+
+    100% {
+        transform: scale(1);
+    } 
+}
+
+.merged {
+    z-index: 20;
+    animation: pop 200ms ease 100ms;
+    animation-fill-mode: backwards;
+}
+
+.wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    color: black;
+    text-align: center;
+    font: 48px/96px Arial;
+    -o-transition: 100ms ease-out;
+    -webkit-transition: 100ms ease-out;
+    -moz-transition: 100ms ease-out;
+    transition: 100ms ease-out;
 }
 
 .thing {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: transparent;
-  color: black;
-  text-align: center;
-  font: 48px/96px Arial;
-  -o-transition: 100ms ease-out;
-  -webkit-transition: 100ms ease-out;
-  -moz-transition: 100ms ease-out;
-  transition: 100ms ease-out;
+    margin: 2px;
 }
 
-/* .thing.merged {
-    z-index: 20;
-    -webkit-animation: pop 200ms ease 100ms;
-    -moz-animation: pop 200ms ease 100ms;
-    animation: pop 200ms ease 100ms;
-    -webkit-animation-fill-mode: backwards;
-    -moz-animation-fill-mode: backwards;
-    animation-fill-mode: backwards;
-} */
-
 .thing.t2 {
-  background: #18df00;
+    background: #18df00;
 }
 
 .thing.t2:after {
-  content: '2';
+    content: '2';
 }
 
 .thing.t4 {
-  background: #5a9900;
-}
+    background: #5a9900;
+}   
 
 .thing.t4:after {
-  content: '4';
+    content: '4';
 }
 
 .thing.t8 {
-  background: #8c8e00;
+    background: #8c8e00;
 }
 
 .thing.t8:after {
-  content: '8';
+    content: '8';
 }
 
 .thing.t16 {
-  background: #d38200;
+    background: #d38200;
 }
 
 .thing.t16:after {
-  content: '16';
+    content: '16';
 }
 
 .thing.t32 {
-  background: #ae3900;
+    background: #ae3900;
 }
 
 .thing.t32:after {
-  content: '32';
+    content: '32';
 }
 
 .thing.t64 {
-  background: #931269;
+    background: #931269;
 }
 
 .thing.t64:after {
-  content: '64';
+    content: '64';
 }
 
 .thing.t128 {
-  background: #0a034c;
+    background: #0a034c;
 }
 
 .thing.t128:after {
-  content: '128';
+    content: '128';
 }
 
 .thing.t256 {
     background: #0a034c;
-  }
-  
-  .thing.t256:after {
+}
+
+.thing.t256:after {
     content: '256';
-  }
+}
 
-  .thing.t512 {
+.thing.t512 {
     background: #0a034c;
-  }
-  
-  .thing.t512:after {
+}
+
+.thing.t512:after {
     content: '512';
-  }
+}
 
-  .thing.t1024 {
+.thing.t1024 {
     background: #0a034c;
-  }
-  
-  .thing.t1024:after {
-    content: '1024';
-  }
+}
 
-  .thing.t2048 {
+.thing.t1024:after {
+    content: '1024';
+}
+
+.thing.t2048 {
     background: #000000;
-  }
-  
-  .thing.t2048:after {
+}
+
+.thing.t2048:after {
     content: '2048';
-  }
+}
 
 /* и так далее */
