@@ -52,12 +52,14 @@ class Game {
                 square = self.field.cell(cell);
 
                 if (square) {
+                    square.mergedFrom = null;
                     // Находим дальнюю пустую клету и клетку за ней
                     var destination = self.findDestination(square, vector);
                     var next = self.field.cell(destination.next);
 
                     // Если в след. клетке есть квадрат того же номинала, что и передвигаемый квадрат
-                    if (next && next.value === square.value) {
+                    // Квадрат не был объединен в этот ход
+                    if (next && next.value === square.value && !next.mergedFrom) {
                         var merged = new Square(destination.next, square.value * 2);
 
                         // Меняем координаты квадрата для проверки isSamePosition и для анимации движения в .mergedFrom
@@ -81,7 +83,7 @@ class Game {
         });
 
         if (moved) {
-            //this.newSquare();
+            this.newSquare();
             this.draw();
         }
     };
