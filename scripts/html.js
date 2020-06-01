@@ -1,9 +1,8 @@
 class HTML {
     constructor($container) {
-        this.$playfield = $('.playfield');
         this.$container = $('#squares-container');
         this.$message = $('#end-screen');
-        this.$score = $('.score');
+        this.$score = $('#score');
     }
 
     draw(grid, data) {
