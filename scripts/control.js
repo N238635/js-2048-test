@@ -6,8 +6,9 @@ class Controls {
         this.enableInput = true;
 
         this.listen();
-        this.bindButton(".reset", this.reset);
-        this.bindButton(".restart", this.reset);
+
+        // Добавляем onClick ко всем кнопкам
+        $('.reset').click(this.reset.bind(this));
     }
 
     // Записываем действия для конкретного евента
@@ -80,11 +81,6 @@ class Controls {
                 self.mouseCoords = null;
             }
         });
-    }
-
-    bindButton(selector, funct) {
-        var button = document.querySelector(selector);
-        button.addEventListener("click", funct.bind(this));
     }
 
     reset(event) {
