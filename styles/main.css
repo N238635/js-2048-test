@@ -196,15 +196,15 @@
 
 .thing.t64 {
     color: black;
-    background: #800080;
+    background: #582C2B;
 }
 
 .thing.t128 {
-    background: #7710AA;
+    background: #800080;
 }
 
 .thing.t256 {
-    background: #0000FF;
+    background: #2C3643;
 }
 
 .thing.t512 {
