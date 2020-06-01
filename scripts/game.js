@@ -16,7 +16,6 @@ class Game {
         this.gameOver = false;
 
         this.newSquare();
-        this.newSquare();
         this.draw();
     }
 
