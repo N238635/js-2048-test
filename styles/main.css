@@ -21,7 +21,7 @@
     width: 400px;
 }
 
-.score-board {
+.top-bar {
     position: relative;
     margin-bottom: 5px;
 
@@ -34,11 +34,11 @@
     padding: 15px;
 }
 
-.score-board .score {
+.top-bar .score {
     padding: 5px;
 }
 
-.score-board .restart {
+.top-bar .reset {
     cursor: pointer;
     margin-left: auto;
     background: gray;
